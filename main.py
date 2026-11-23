@@ -7,6 +7,7 @@ root-owned /output inside a sticky parent).
 """
 
 import os
+import shutil
 
 JOKE = "I told HR my workload was crushing me, so they signed me up for a workshop called 'Crushing It!'"
 
@@ -19,9 +20,7 @@ def main() -> None:
     for name in os.listdir(OUTPUT_DIR):
         path = os.path.join(OUTPUT_DIR, name)
         if os.path.isdir(path) and not os.path.islink(path):
-            for sub in os.listdir(path):
-                os.remove(os.path.join(path, sub))
-            os.rmdir(path)
+            shutil.rmtree(path)
         else:
             os.remove(path)
     with open(OUTPUT_FILE, "w", encoding="utf-8", newline="\n") as f:
